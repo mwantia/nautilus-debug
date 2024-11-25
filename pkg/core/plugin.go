@@ -17,12 +17,16 @@ func (p *DebugProcessor) Name() (string, error) {
 	return "debug", nil
 }
 
-func (p *DebugProcessor) Process(ctx *shared.NautilusPipelineContext) (*shared.NautilusPipelineContext, error) {
+func (p *DebugProcessor) Process(data *shared.PipelineContextData) (*shared.PipelineContextData, error) {
 	log.Println("Processing external debug plugin...")
-	return ctx, nil
+	return data, nil
 }
 
-func (p *DebugProcessor) Configure() error {
+func (p *DebugProcessor) Configure(cfg map[string]interface{}) error {
+	for k, v := range cfg {
+		log.Printf("Key: %s, Value: %v", k, v)
+	}
+
 	log.Println("Configuring external debug plugin...")
 	return nil
 }
