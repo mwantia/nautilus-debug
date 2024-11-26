@@ -2,7 +2,10 @@ BUILD_NAME := debug
 
 .PHONY: build
 
-build:
+init:
+	go mod tidy ;
+
+build: init
 	CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-s -w -extldflags "-static"' -o build/$(BUILD_NAME) ./cmd/nautilus/main.go ;
 
 test: build

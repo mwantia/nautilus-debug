@@ -1,37 +1,53 @@
 package core
 
 import (
-	"log"
-
-	"github.com/mwantia/nautilus/pkg/shared"
+	"github.com/mwantia/nautilus/pkg/log"
+	"github.com/mwantia/nautilus/pkg/plugin"
 )
 
 type DebugProcessor struct {
+	Config *DebugConfig
+	Logger *log.Logger
 }
 
 func NewImpl() *DebugProcessor {
-	return &DebugProcessor{}
+	return &DebugProcessor{
+		Logger: log.NewLogger("debug"),
+	}
 }
 
 func (p *DebugProcessor) Name() (string, error) {
 	return "debug", nil
 }
 
-func (p *DebugProcessor) Process(data *shared.PipelineContextData) (*shared.PipelineContextData, error) {
-	log.Println("Processing external debug plugin...")
-	return data, nil
+func (p *DebugProcessor) GetCapabilities() (plugin.PipelineProcessorCapability, error) {
+	return plugin.PipelineProcessorCapability{
+		Types: []plugin.PipelineProcessorCapabilityType{
+			plugin.None,
+		},
+	}, nil
 }
 
-func (p *DebugProcessor) Configure(cfg map[string]interface{}) error {
-	for k, v := range cfg {
-		log.Printf("Key: %s, Value: %v", k, v)
+func (p *DebugProcessor) Configure(data map[string]interface{}) error {
+	cfg, err := GetConfig(data)
+	if err != nil {
+		p.Logger.Warn("Error converting mapstructure", "error", err)
 	}
 
-	log.Println("Configuring external debug plugin...")
+	p.Config = cfg
+
+	p.Logger.Info("Configuring external debug plugin...")
+	p.Logger.Debug("External Debug plugin", "name", cfg.Name)
+
 	return nil
 }
 
+func (p *DebugProcessor) Process(data *plugin.PipelineContextData) (*plugin.PipelineContextData, error) {
+	p.Logger.Info("Processing external debug plugin...")
+	return data, nil
+}
+
 func (p *DebugProcessor) Health() error {
-	log.Println("Checking health for external debug plugin...")
+	p.Logger.Info("Checking health for external debug plugin...")
 	return nil
 }

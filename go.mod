@@ -2,7 +2,7 @@ module github.com/mwantia/nautilus-debug
 
 go 1.22.5
 
-require github.com/mwantia/nautilus v0.0.0-20241120225535-69a24e1a3fe4
+require github.com/mwantia/nautilus v0.0.0-20241125135539-d43aa8fb7bbc
 
 require (
 	github.com/fatih/color v1.7.0 // indirect
@@ -12,6 +12,7 @@ require (
 	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/oklog/run v1.0.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/mwantia/nautilus-debug/pkg/core"
-	"github.com/mwantia/nautilus/pkg/shared"
+	"github.com/mwantia/nautilus/pkg/plugin"
 )
 
 var (
@@ -19,11 +19,11 @@ func main() {
 	impl := core.NewImpl()
 
 	if strings.TrimSpace(*Address) != "" {
-		if err := shared.RegisterPipelineProcessor(impl, *Address); err != nil {
+		if err := plugin.RegisterPipelineProcessor(impl, *Address); err != nil {
 			log.Fatalf("Unable to register plugin: %v", err)
 		}
 	} else {
-		if err := shared.ServePipelineProcessor(impl); err != nil {
+		if err := plugin.ServePipelineProcessor(impl); err != nil {
 			log.Fatalf("Unable to serve plugin: %v", err)
 		}
 	}
